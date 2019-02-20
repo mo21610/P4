@@ -9,7 +9,7 @@
             die('Erreur : '.$e->getMessage()); // Affichage d'un msg si erreur
     }
     // Récupération des post par ordre décroissant
-    $response = $bdd->query('SELECT title, post, date_post FROM admin ORDER BY id DESC');
+    $response = $bdd->query('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM admin ORDER BY id DESC');
 ?>
 
 <!DOCTYPE html>
@@ -29,14 +29,12 @@
     <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
     <?php while ($data = $response->fetch()){ ?> 
     <div id=billets>
-        <h2><?= htmlspecialchars($data['title']) ?></h2> 
-        <p><?= htmlspecialchars($data['post']) ?></p>
-        <p>Le <?= htmlspecialchars($data['date_post']) ?></p>
-        <a href="#">Lire la suite</a>
+        <h2><?= nl2br(htmlspecialchars($data['title'])) ?></h2> <!-- nl2br convertit retour à la ligne en balises HTML -->
+        <p><?= nl2br(htmlspecialchars($data['post'])) ?></p>
+        <p>Le <?= nl2br(htmlspecialchars($data['date_post_fr'])) ?></p>
+        <a href="post.php?post=<?= $data['id']; ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
     </div>
-    <?php }
-    $response->closeCursor(); // Ferme les résultats de recherche
-    ?>
+    <?php } ?>
 
 </body>
 </html>
