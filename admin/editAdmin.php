@@ -50,5 +50,18 @@
         <button type="submit">Publier</button>
     </form>
 
+    <h2>Billets édités:</h2>
+
+    <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
+    <?php while ($data = $response->fetch()){ ?> 
+    <div id="post">
+        <h3><?= htmlspecialchars($data['title']) ?></h3> 
+        <p><?= htmlspecialchars($data['post']) ?></p>
+        <p>Le <?= htmlspecialchars($data['date_post']) ?></p>
+    </div>
+    <?php }
+    $response->closeCursor(); // Ferme les résultats de recherche
+    ?>
+
 </body>
 </html>
