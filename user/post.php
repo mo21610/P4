@@ -11,6 +11,12 @@
     $req = $bdd->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM admin WHERE id = ?');
     $req->execute(array($_GET['post']));
     $data = $req->fetch();
+
+    $req->closeCursor(); // on libère le curseur pour la prochaine requête
+
+    // Récupération des commentaires
+    $req = $bdd->prepare('SELECT author, comment, DATE_FORMAT(date_comment, \'%d/%m/%Y à %Hh%imin%ss\') AS date_comment_fr FROM comments WHERE id_post = ? ORDER BY date_comment');
+    $req->execute(array($_GET['post']));
 ?>
 
 <!DOCTYPE html>
@@ -32,5 +38,11 @@
     <p><?= nl2br(htmlspecialchars($data['post'])); ?></p> 
     <p><?= nl2br(htmlspecialchars($data['date_post_fr'])); ?></p>
 
+    <h2>Commentaires</h2>
+
+    <?php while ($data = $req->fetch()){ ?>
+    <p><?= htmlspecialchars($data['author']); ?> le <?= $data['date_comment_fr']; ?></p>
+    <p><?= nl2br(htmlspecialchars($data['comment'])); ?></p>
+    <?php } ?>
 </body>
 </html>
