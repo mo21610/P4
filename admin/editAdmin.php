@@ -16,6 +16,7 @@
         }
 
         if ($validation == true) {
+            // Insertion des post dans BDD
             $req = $bdd->prepare('INSERT INTO admin (title, post, date_post) VALUES(:title, :post, NOW())'); // Requête sans la partie variable
             $req->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
                 'title' => $_POST['title'],
@@ -55,9 +56,9 @@
     <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
     <?php while ($data = $response->fetch()){ ?> 
     <div id="post">
-        <h3><?= nl2br(htmlspecialchars($data['title'])) ?></h3> <!-- nl2br convertit retour à la ligne en balises HTML -->
+        <h3><?= htmlspecialchars($data['title']) ?></h3> <!-- nl2br convertit retour à la ligne en balises HTML -->
         <p><?= nl2br(htmlspecialchars($data['post'])) ?></p>
-        <p>Le <?= nl2br(htmlspecialchars($data['date_post_fr'])) ?></p>
+        <p>Le <?= htmlspecialchars($data['date_post_fr']) ?></p>
     </div>
     <?php } ?>
 
