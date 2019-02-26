@@ -1,10 +1,10 @@
 <?php
-    // Ouverture session
-    session_start();
-        if(!isset($_SESSION['user'])) {
-            header('Location:login.php');
-            exit();
-        }
+    // // Ouverture session
+    // session_start();
+    //     if(!isset($_SESSION['user'])) {
+    //         header('Location:login.php');
+    //         exit();
+    //     }
 
     try // Connexion à la BDD
     {
