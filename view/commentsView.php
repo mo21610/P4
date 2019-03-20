@@ -1,13 +1,3 @@
-<?php
-
-    require 'model/Comment.php';
-    require 'model/CommentManager.php';
-
-    $commentManagerReport = new CommentManager;
-    $commentsReport = $commentManagerReport->getCommentReport();
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,15 +10,15 @@
 </head>
 <body>
 
-    <?php include("template_header_admin.php"); ?>
+    <?php include("view/template_header_admin.php"); ?>
 
-    <a class="btn btn-secondary" href="post_admin.php">Retour à la liste des billets</a>
+    <a class="btn btn-secondary" href="view/postAdminView.php">Retour à la liste des billets</a>
    
     <!-- Affichage commentaires correspondant au post -->
     <?php foreach ($commentsReport as $commentReport){ ?>
         <p><?= $commentReport->author() ?> le <?= $commentReport->dateComment() ?></p>
         <p><?= $commentReport->comment() ?></p>
-        <a class="btn btn-danger" href="delete_comment.php?comment=<?= $commentReport->id(); ?>">Supprimer</a>
+        <a class="btn btn-danger" href="controller/delete_comment.php?comment=<?= $commentReport->id(); ?>">Supprimer</a>
         <a class="btn btn-info" href="report.php?comment=<?= $commentReport->id(); ?>&report=<?= $commentReport->report() ?>">Autoriser affichage commentaire</a>
     <?php } ?>
 </body>

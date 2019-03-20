@@ -12,7 +12,7 @@
         $commentManagerUpdate = new CommentManager;
         $commentManagerUpdate = $commentManagerUpdate->updateComment($commentUpdate);
 
-        header('Location:post.php?post='.$_GET['post']);
+        header('Location:view/postView.php?post='.$_GET['post']);
         exit();
     }
     else if ($valeur_report == '1') {
@@ -22,7 +22,7 @@
         $commentManagerUpdateReport = new CommentManager;
         $commentManagerUpdateReport = $commentManagerUpdateReport->updateCommentReport($commentUpdateReport);
          
-        header("Location:comments.php");
+        header("Location:view/commentsView.php");
         exit();
     }
     

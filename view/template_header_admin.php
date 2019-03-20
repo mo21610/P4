@@ -4,10 +4,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="newPost.php">Editer un billet<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="view/newPostView.php">Editer un billet<span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="comments.php">Gestion des commentaires</a>
+                    <a class="nav-link" href="commentsView.php">Gestion des commentaires</a>
                   </li>
                   <li class="nav-item active">
                     <a class="nav-link" href="sign_out.php">Se déconnecter</a>

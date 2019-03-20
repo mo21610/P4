@@ -1,15 +1,3 @@
-<?php
-
-    require 'model/Post.php';
-    require 'model/PostManager.php';
-
-  // Récupération des post par ordre décroissant
-  $postManager = new PostManager;
-  $postsAll = $postManager->getAllPosts();
-  
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,7 +22,7 @@
             <h2 class="font-italic"><?= nl2br(htmlspecialchars($postAll->title())) ?></h2> <!-- nl2br convertit retour à la ligne en balises HTML -->
             <p><?= nl2br(htmlspecialchars($postAll->post())) ?></p>
             <p>Le <?= nl2br(htmlspecialchars($postAll->datePost())) ?></p>
-            <a href="post.php?post=<?= $postAll->id(); ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
+            <a href="view/postView.php?post=<?= $postAll->id(); ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
         </div>
     <?php } ?>  
 

@@ -1,42 +1,3 @@
- <?php
-
-    require 'model/Comment.php';
-    require 'model/CommentManager.php';
-    require 'model/Post.php';
-    require 'model/PostManager.php';
-
-    $id_post = $_GET['post'];
-    
-    // Récupération du post avec méthode get
-    $postManagerOne = new PostManager;
-    $postOne = $postManagerOne->getOnePost($_GET['post']);
-
-    // Recuperation des commentaires
-    $commentManager = new CommentManager;
-    $comments = $commentManager->getComment($_GET['post']);
-
-    // Insertion des commentaires
-    if(!empty($_POST['author']) || !empty($_POST['comment'])) {
-        $validation = true;
-        if (empty($_POST['author']) || empty($_POST['comment'])) {
-            $validation = false;
-        }
-        if ($validation == true) {
-            $commentInsert = new Comment([
-                'id_post' => $_GET['post'],
-                'author' => $_POST['author'],
-                'comment' => $_POST['comment'],
-            ]);        
-            $commentManagerInsert = new CommentManager;
-            $commentManagerInsert->addComment($commentInsert);
-
-            header("Location:post.php?post=$id_post");
-            exit();
-        }
-    }
-   
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -54,10 +15,10 @@
         <p><?= $postOne->title()  ?></p>
     <?php $title = ob_get_clean(); ?>
 
-    <?php require('template_header.php'); ?>
+    <?php require('view/template_header.php'); ?>
 
 
-    <a class="btn btn-secondary" href="index.php">Retour à la liste des billets</a>
+    <a class="btn btn-secondary" href="indexView.php">Retour à la liste des billets</a>
     
     <!-- Affichage post -->
     <p><?= $postOne->post() ?></p>
@@ -75,7 +36,7 @@
     
     <h2>Ajouter un commentaire</h2>
 
-    <form class="col-md-5 col-xs-12" action="post.php?post=<?= $id_post ?>" method="post">
+    <form class="col-md-5 col-xs-12" action="controller/post.php?post=<?= $id_post ?>" method="post">
         Pseudo: <br><input class="form-control" type="text" name="author" class="form_comment"><br>
         Commentaire: <br><textarea class="form-control" name="comment" class="form_comment"></textarea><br>
         <button class="btn btn-secondary" type="submit">Ajouter un commentaire</button>

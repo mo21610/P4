@@ -5,5 +5,5 @@
     $postManagerDelete = new PostManager;
     $postDelete = $postManagerDelete->deletePost($_GET['post']);
     
-    header('Location:post_admin.php');
+    header('Location:view/postAdminView.php');
     exit();

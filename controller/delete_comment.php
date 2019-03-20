@@ -6,5 +6,5 @@
     $commentManagerDelete = new CommentManager;
     $commentDelete = $commentManagerDelete->deleteComment($_GET['comment']);
     
-    header('Location:comments.php');
+    header('Location:view/commentsView.php');
     exit();

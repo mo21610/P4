@@ -13,6 +13,6 @@
         $postManagerUpdate = new PostManager;
         $postManagerUpdate = $postManagerUpdate->updatePost($postUpdate);
 
-            header('Location:post_admin.php');
-            exit();      
+        header('Location:view/postAdminView.php');
+        exit();      
     }

@@ -1,29 +1,3 @@
-<?php
-
-    require 'model/Post.php';
-    require 'model/PostManager.php';
-
-    // Insertion des post dans BDD
-    if (!empty($_POST)) { // Si $_POST n'est pas vide 
-        $validation = true;       
-        if (empty($_POST)) {
-            $validation = false;
-        }
-        if ($validation == true) {
-            $postInsert = new Post([
-                'title' => $_POST['title'],
-                'post' => $_POST['post'],
-            ]);
-            $postManagerInsert = new PostManager;
-            $postManagerInsert->addPost($postInsert);
-            header('Location:post_admin.php');
-            exit();
-        }
-    }
-    
-?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -37,7 +11,7 @@
 
 <body>
 
-    <?php include("template_header_admin.php"); ?>
+    <?php include("view/template_header_admin.php"); ?>
 
     <form class="offset-1 col-md-10" action="newPost.php" method="post">
         <label for="title">Titre :</label>
