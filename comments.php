@@ -1,35 +1,35 @@
 <?php
-    try // Connexion à la BDD
-        {
-            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        }
-        catch(Exception $e)
-        {
-                die('Erreur : '.$e->getMessage());
-        }
 
-    // Récupération des commentaires avec méthode GET
-    $req = $bdd->query("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment_fr, Signalement FROM comments WHERE Signalement = 1 ORDER BY date_comment");
-    
+    require 'model/Comment.php';
+    require 'model/CommentManager.php';
+
+    $commentManagerReport = new CommentManager;
+    $commentsReport = $commentManagerReport->getCommentReport();
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Page des commentaires</title>
 </head>
 <body>
-    <a href="post_admin.php">Retour à la liste des billets</a>
+
+    <?php include("template_header_admin.php"); ?>
+
+    <a class="btn btn-secondary" href="post_admin.php">Retour à la liste des billets</a>
    
     <!-- Affichage commentaires correspondant au post -->
-    <?php while ($dataComment = $req->fetch()){ ?>
-        <p><?= $dataComment['author'] ?> le <?= $dataComment['date_comment_fr']; ?></p>
-        <p><?= $dataComment['comment'] ?></p>
-        <a href="delete_comment.php?comment=<?= $dataComment['id']; ?>">Supprimer</a>
-        <a href="signalement.php?comment=<?= $dataComment['id']; ?>&signalement=<?= $dataComment['Signalement'] ?>">Autoriser affichage commentaire</a>
+    <?php foreach ($commentsReport as $commentReport){ ?>
+        <p><?= $commentReport->author() ?> le <?= $commentReport->dateComment() ?></p>
+        <p><?= $commentReport->comment() ?></p>
+        <a class="btn btn-danger" href="delete_comment.php?comment=<?= $commentReport->id(); ?>">Supprimer</a>
+        <a class="btn btn-info" href="report.php?comment=<?= $commentReport->id(); ?>&report=<?= $commentReport->report() ?>">Autoriser affichage commentaire</a>
     <?php } ?>
 </body>
 </html>

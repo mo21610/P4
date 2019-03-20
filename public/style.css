@@ -1,0 +1,21 @@
+body
+{
+    margin: 0;
+    font-size: 1.1em;
+    font-family: 'Dancing Script', cursive;
+}
+#img_header
+{
+    position: relative;
+}
+#date_post
+{
+    text-align: left;
+}
+#post
+{
+    font-size: 4em;
+}
+
+
+

@@ -1,22 +1,18 @@
 <?php
     // Ouverture session
     session_start();
-        if(!isset($_SESSION['user'])) {
-            header('Location:login.php');
-            exit();
-        }
 
-    try // Connexion à la BDD
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+    if(!isset($_SESSION['user'])) {
+        header('Location:login.php');
+        exit();
     }
-    catch(Exception $e)
-    {
-            die('Erreur : '.$e->getMessage());
-    }
+
+    require 'model/Post.php';
+    require 'model/PostManager.php';
 
     // Récupération des post par ordre décroissant
-    $response = $bdd->query('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM admin ORDER BY id DESC');
+    $postManager = new PostManager;
+    $postsAll = $postManager->getAllPosts();
 
 ?>
 
@@ -26,27 +22,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
 
-    <?php include("header_admin.php"); ?> 
+    <?php include("template_header_admin.php"); ?>
 
-    <!-- Lien vers page dédition des billets -->
-    <a href="editAdmin.php">Editer</a>
+    <div class="container-fluid">
+        <!-- Lien vers page dédition des billets -->
 
-    <h2>Billets édités:</h2>
+        <br>
 
-    <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
-    <?php while ($data = $response->fetch()){ ?> 
-    <div id="post">
-        <h3><?= htmlspecialchars($data['title']) ?></h3> <!-- nl2br convertit retour à la ligne en balises HTML -->
-        <p><?= nl2br(htmlspecialchars($data['post'])) ?></p>
-        <p>Le <?= htmlspecialchars($data['date_post_fr']) ?></p>
-        <a href="modif_form.php?post=<?= $data['id']; ?>">Modifier</a>
-        <a href="delete_post.php?post=<?= $data['id']; ?>">Supprimer</a>
+        <a class="btn btn-secondary btn-lg" href="newPost.php" role="button">Editer</a>
+
+        <br>
+        <br>
+
+        <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
+        <?php foreach ($postsAll as $postAll){ ?> 
+            <table class="table table-striped">
+                <tr class=row>
+                    <td class="col-md-2"><h3><?= htmlspecialchars($postAll->title()) ?></h3></td> <!-- nl2br convertit retour à la ligne en balises HTML -->
+                    <td class="col-md-6"><?= nl2br(htmlspecialchars($postAll->post())) ?></td>
+                    <td class=col-md-2><a class="btn btn-info" href="edit_post.php?post=<?= $postAll->id(); ?>" role="button">Modifier</a></td>
+                    <td class=col-md-2><a class="btn btn-info" href="delete_post.php?post=<?= $postAll->id(); ?>" role="button">Supprimer</a></td>
+                </tr>
+            </table>
+        <?php } ?>
     </div>
-    <?php } ?>
-
 </body>
 </html>

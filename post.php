@@ -1,47 +1,40 @@
-<?php
-    
-    $id_post = $_GET['post'];
-    var_dump($id_post);
+ <?php
 
-    try // Connexion à la BDD
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-    }
-    catch(Exception $e)
-    {
-            die('Erreur : '.$e->getMessage());
-    }
+    require 'model/Comment.php';
+    require 'model/CommentManager.php';
+    require 'model/Post.php';
+    require 'model/PostManager.php';
+
+    $id_post = $_GET['post'];
     
     // Récupération du post avec méthode get
-    $req = $bdd->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%imin%ss') AS date_post_fr FROM admin WHERE id = :id");
-    $req->execute(array(
-        'id' => $_GET['post'],
-    ));
-    $data = $req->fetch();
+    $postManagerOne = new PostManager;
+    $postOne = $postManagerOne->getOnePost($_GET['post']);
 
+    // Recuperation des commentaires
+    $commentManager = new CommentManager;
+    $comments = $commentManager->getComment($_GET['post']);
 
-    // Récupération des commentaires avec méthode GET
-    $req = $bdd->prepare("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment_fr, Signalement FROM comments WHERE id_post = :id_post AND Signalement = 0 ORDER BY date_comment");
-    $req->execute(array(
-        'id_post' => $_GET['post'],
-    ));
+    // Insertion des commentaires
+    if(!empty($_POST['author']) || !empty($_POST['comment'])) {
+        $validation = true;
+        if (empty($_POST['author']) || empty($_POST['comment'])) {
+            $validation = false;
+        }
+        if ($validation == true) {
+            $commentInsert = new Comment([
+                'id_post' => $_GET['post'],
+                'author' => $_POST['author'],
+                'comment' => $_POST['comment'],
+            ]);        
+            $commentManagerInsert = new CommentManager;
+            $commentManagerInsert->addComment($commentInsert);
 
-    
-    // Insertion commentaire dans BDD
-    if(empty($_POST['author']) || empty($_POST['comment'])) {
-        echo "Variable vide";
+            header("Location:post.php?post=$id_post");
+            exit();
+        }
     }
-    else {
-        $reqInsertComment = $bdd->prepare('INSERT INTO comments (id_post, author, comment, date_comment, Signalement) VALUES(:id_post, :author, :comment, NOW(), 0)'); // Requête sans la partie variable
-        $reqInsertComment->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
-            'id_post' => $_GET['post'],
-            'author' => $_POST['author'],
-            'comment' => $_POST['comment'],
-        ));
-        header("Location:post.php?post=$id_post");
-        exit();
-    }
-
+   
 ?>
 
 <!DOCTYPE html>
@@ -50,37 +43,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Page des billets du blog</title>
 </head>
 
 <body>
 
-    <?php include("header.php"); ?>
+    <?php ob_start(); ?>
+        <p><?= $postOne->title()  ?></p>
+    <?php $title = ob_get_clean(); ?>
 
-    <a href="index.php">Retour à la liste des billets</a>
+    <?php require('template_header.php'); ?>
+
+
+    <a class="btn btn-secondary" href="index.php">Retour à la liste des billets</a>
     
     <!-- Affichage post -->
-    <p><?= nl2br(htmlspecialchars($data['post'])); ?></p> 
-    <p><?= nl2br(htmlspecialchars($data['date_post_fr'])); ?></p>
-
+    <p><?= $postOne->post() ?></p>
+    <p>Le <?= $postOne->datePost()  ?></p>
+    
     <h2>Commentaires</h2>
-
-    <!-- Affichage commentaires correspondant au post -->
-    <?php while ($dataComment = $req->fetch()){ ?>
-    <p><?= $dataComment['author'] ?> le <?= $dataComment['date_comment_fr']; ?></p>
-    <p><?= $dataComment['comment'] ?></p>
-    <a href="signalement.php?comment=<?= $dataComment['id']; ?>&post=<?= $id_post ?>&signalement=<?= $dataComment['Signalement'] ?>">Signaler</a>
-
+    <!-- Affichage commentaires -->
+    <?php foreach ($comments as $comment) { ?>
+        <p><?= $comment->author() ?> le <?= $comment->dateComment() ?></p>
+        <p><?= $comment->comment()  ?></p>
+        <a class="btn btn-danger" href="report.php?comment=<?= $comment->id(); ?>&post=<?= $comment->idPost(); ?>&report=<?= $comment->report(); ?>">Signaler</a>
     <?php } ?>
+
 
     
     <h2>Ajouter un commentaire</h2>
 
-    <form action="post.php?post=<?= $id_post ?>" method="post">
-        Pseudo: <br><input type="text" name="author" class="form_comment"><br>
-        Commentaire: <br><textarea name="comment" class="form_comment" cols="100" rows="10"></textarea><br>
-        <button type="submit">Ajouter un commentaire</button>
+    <form class="col-md-5 col-xs-12" action="post.php?post=<?= $id_post ?>" method="post">
+        Pseudo: <br><input class="form-control" type="text" name="author" class="form_comment"><br>
+        Commentaire: <br><textarea class="form-control" name="comment" class="form_comment"></textarea><br>
+        <button class="btn btn-secondary" type="submit">Ajouter un commentaire</button>
     </form>
 
 </body>

@@ -1,0 +1,11 @@
+
+body
+{
+    margin: 0;
+    font-size: 1.2em;
+}
+.container-fluid
+{
+    padding-right: -15px;
+    padding-left: -15px;
+}

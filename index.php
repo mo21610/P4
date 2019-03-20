@@ -1,22 +1,12 @@
 <?php
-    $nbPostPerPage = 5;
 
-    try // Try et Catch pour tester les erreurs
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', ''); // Connexion à la BDD
-    }
-    catch(Exception $e)
-    {
-            die('Erreur : '.$e->getMessage()); // Affichage d'un msg si erreur
-    }
-    // Récupération des post par ordre décroissant
-    $response = $bdd->query('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM admin ORDER BY id DESC');
+    require 'model/Post.php';
+    require 'model/PostManager.php';
 
-    // $response->closeCursor(); // on libère le curseur pour la prochaine requête
-
-    // $response = $bdd->query('SELECT COUNT(*) AS nb_post FROM admin');
-    // $data = $response->fetch();
-    // var_dump($data['nb_post']);
+  // Récupération des post par ordre décroissant
+  $postManager = new PostManager;
+  $postsAll = $postManager->getAllPosts();
+  
 
 ?>
 
@@ -26,25 +16,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
     <title>Page d'accueil du blog</title>
 </head>
 
 <body>
 
-    <?php include("header.php"); ?> 
+    <?php $title = "Billet simple pour l'Alaska"; ?>
+    <?php require('template_header.php'); ?>
+
   
     <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
-    <?php while ($data = $response->fetch()){ ?> 
-    <div id=billets>
-        <h2><?= nl2br(htmlspecialchars($data['title'])) ?></h2> <!-- nl2br convertit retour à la ligne en balises HTML -->
-        <p><?= nl2br(htmlspecialchars($data['post'])) ?></p>
-        <p>Le <?= nl2br(htmlspecialchars($data['date_post_fr'])) ?></p>
-        <a href="post.php?post=<?= $data['id']; ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
-    </div>
-    <?php } ?>
-
-    <a href="index.php?page=2">2</a>
+    <?php foreach ($postsAll as $postAll) { ?> 
+        <div class="jumbotron offset-1 col-md-10 text-white bg-dark">
+            <h2 class="font-italic"><?= nl2br(htmlspecialchars($postAll->title())) ?></h2> <!-- nl2br convertit retour à la ligne en balises HTML -->
+            <p><?= nl2br(htmlspecialchars($postAll->post())) ?></p>
+            <p>Le <?= nl2br(htmlspecialchars($postAll->datePost())) ?></p>
+            <a href="post.php?post=<?= $postAll->id(); ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
+        </div>
+    <?php } ?>  
 
 </body>
 </html>

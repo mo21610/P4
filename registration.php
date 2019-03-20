@@ -1,51 +1,48 @@
 <?php
-    $validation = true;
-    try // Connexion à la BDD
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-    }
-    catch(Exception $e)
-    {
-            die('Erreur : '.$e->getMessage());
-    }
 
-    // // Recuperation données table users
-    // if(!empty($_POST['username']) || !empty($_POST['password'])) {
-    //     $countUsers = $bdd->query("SELECT COUNT(username) FROM users WHERE username = $_POST['username']");
-    //     // $countUsers->execute(array(
-    //     // 'username' => $_POST['username']
-    //     // ));
-    //     var_dump($_POST['username']);
-    //     var_dump($countUsers);
-    //     if ($countUsers > 0){
-    //         echo "Pseudo déjà utilisé, veuillez en choisir un autre";
-    //         $validation = false;
-    //     }
-    // }
-    
+    require 'model/User.php';
+    require 'model/UserManager.php';
 
-    
     // Insertion dans BDD
-    if(empty($_POST['username']) || empty($_POST['password'])) {
-        echo "Variable vide";
-        $validation = false;
-    }
-    else if($_POST['password'] != $_POST['confirm_password']) {
-        echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
-        $validation = false;
-    } 
-    else if ($validation == true){
-         // Hachage du mot de passe
-        $pass_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $req = $bdd->prepare('INSERT INTO users(username, password) VALUES(:username, :password)');
-        $req->execute(array(
-            'username' => $_POST['username'],
-            'password' => $pass_hash
-        ));
-        header("Location:login.php");
-        exit();
-    }
+    if(!empty($_POST)) { 
+        $validation = true;
+    
+        // $countUsers = $bdd->prepare('SELECT * FROM users WHERE username = :username');
+        // $countUsers->execute(array(
+        //     'username' => $_POST['username']
+        // ));
+        // $data = $countUsers->fetch();
+        // var_dump($data);
+        // $userManager = new UserManager;
+        // $user = $userManager->userInsert($_POST['username']);
 
+        if(empty($_POST['username']) || empty($_POST['password'])) {
+            echo "Veuillez renseigner tous les champs";
+            $validation = false;
+        }
+        // if ($username){
+        //     echo "Pseudo déjà utilisé, veuillez en choisir un autre";
+        //     $validation = false;
+        // }
+        if($_POST['password'] != $_POST['confirm_password']) {
+            echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
+            $validation = false;
+        } 
+        if ($validation == true){
+             // Hachage du mot de passe
+            $pass_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            $userInsert = new User([
+                'username' => $_POST['username'],
+                'password' => $pass_hash,
+            ]);
+            $userManagerInsert = new UserManager;
+            $userManagerInsert->userInsert($userInsert);
+            
+            header("Location:login.php");
+            exit();
+        }
+    }
 ?>
 
 
