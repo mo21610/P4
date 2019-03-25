@@ -11,7 +11,7 @@
 <body>
     <?php include("template_header_admin.php"); ?> 
 
-    <form class="offset-1 col-md-10" action="controller/edit_post_execute.php?post=<?= $postOne->id(); ?>" method="post">
+    <form class="offset-1 col-md-10" action="../controller/index.php?action=updatePost&post=<?= $postOne->id(); ?>" method="post">
         Titre: <br><input type="text" class="form-control" value="<?= $postOne->title(); ?>" name="title_edit"><br>
         Texte: <br><textarea name="post_edit" class="form-control" cols="100" rows="10"><?= $postOne->post(); ?></textarea><br>
         <input type="hidden" name="id_post_edit" value="<?php $postOne->id(); ?>"/>

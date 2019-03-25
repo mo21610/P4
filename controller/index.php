@@ -1,12 +1,42 @@
 <?php
 
-    require 'model/Post.php';
-    require 'model/PostManager.php';
+    require_once 'Controller.php';
 
-    // Récupération des post par ordre décroissant
-    $postManager = new PostManager;
-    $postsAll = $postManager->getAllPosts();
-
-    require 'view/indexView.php';
-
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == 'readAllPostAdmin') {
+            Controller::readAllPostAdmin();
+        }
+        elseif ($_GET['action'] == 'readAllPost') {
+            Controller::readAllPost();
+        }
+        elseif ($_GET['action'] == 'post') {
+            if (isset($_GET['post'])) {
+                Controller::post();
+            }
+        }
+        elseif ($_GET['action'] == 'newPost') {
+            Controller::newPost();
+        }
+        elseif ($_GET['action'] == 'commentsReport') {
+            Controller::commentsReport();
+        }
+        elseif ($_GET['action'] == 'updatePost') {
+            Controller::updatePost();
+        }
+        elseif ($_GET['action'] == 'userInsert') {
+            Controller::userInsert();
+        }
+        elseif ($_GET['action'] == 'login') {
+            Controller::login();
+        }
+        elseif ($_GET['action'] == 'signOut') {
+            Controller::signOut();
+        }
+        else {
+            echo 'Erreur : aucun identifiant de billet envoyé';
+        }
+    }
+    else {
+        Controller::readAllPost();
+    }
 

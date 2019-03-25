@@ -13,15 +13,15 @@
             }
         }
 
-        // Recuperation de toute la table user
+        // Recuperation de la table user
         public function getUser($username) {
-            $req = $this->_db->prepare('SELECT username, password, FROM users WHERE username = :username');
+            $req = $this->_db->prepare("SELECT * FROM users WHERE username = :username");
             $req->execute(array(
-                'username' => $username,
+                'username' => $username
             ));
-            $data = $req->fetch(PDO::FETCH_ASSOC);
-            $userUsername = New User($data);
-            return $userUsername;
+            $dataUser = $req->fetch(PDO::FETCH_ASSOC);
+            $user = new User($dataUser);
+            return $user;
         }
 
         // Insertion nouvel utilisateur dans DB

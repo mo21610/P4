@@ -11,9 +11,9 @@
 
 <body>
 
-    <?php include("view/template_header_admin.php"); ?>
+    <?php include("template_header_admin.php"); ?>
 
-    <form class="offset-1 col-md-10" action="newPost.php" method="post">
+    <form class="offset-1 col-md-10" action="../controller/index.php?action=newPost" method="post">
         <label for="title">Titre :</label>
         <input type="text" id="title" class="form-control" name="title">
         <label for="text">Texte :</label>

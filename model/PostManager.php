@@ -13,6 +13,9 @@
             }
         }
 
+        // SessionInterface::class => object(className: PHPSession::class),
+
+
         // Récupération des post par ordre décroissant
 
 

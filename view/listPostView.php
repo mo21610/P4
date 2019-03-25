@@ -12,17 +12,12 @@
 
 <body>
 
-    <?php $title = "Billet simple pour l'Alaska"; ?>
-    <?php require('template_header.php'); ?>
-
-  
-    <!-- Affichage de chaque posts (toutes les données sont protégées par htmlspecialchars) -->
     <?php foreach ($postsAll as $postAll) { ?> 
         <div class="jumbotron offset-1 col-md-10 text-white bg-dark">
             <h2 class="font-italic"><?= nl2br(htmlspecialchars($postAll->title())) ?></h2> <!-- nl2br convertit retour à la ligne en balises HTML -->
             <p><?= nl2br(htmlspecialchars($postAll->post())) ?></p>
             <p>Le <?= nl2br(htmlspecialchars($postAll->datePost())) ?></p>
-            <a href="view/postView.php?post=<?= $postAll->id(); ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
+            <a href="../controller/index.php?action=post&post=<?= $postAll->id(); ?>">Lire la suite</a> <!-- Lien vers la page des post entier -->
         </div>
     <?php } ?>  
 

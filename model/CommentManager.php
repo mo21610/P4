@@ -1,7 +1,9 @@
 <?php
 
-    class CommentManager {
-        private $_db;
+    require"Manager.php";
+
+    class CommentManager extends Manager {
+        // private $_db;
 
         public function __construct() {
             try // Connexion à la BDD
@@ -13,6 +15,7 @@
                     die('Erreur : '.$e->getMessage());
             }
         }
+
 
         // Insertion commentaires dans BDD
         public function addComment(Comment $comment){
@@ -39,6 +42,8 @@
 
         // Recuperation commentaires signalé
         public function getCommentReport() {
+            var_dump($this);
+                die();
             $commentsReport = [];
             $req = $this->_db->query("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment, report FROM comments WHERE report = 1 ORDER BY date_comment");
             while ($data = $req->fetch(PDO::FETCH_ASSOC)) {

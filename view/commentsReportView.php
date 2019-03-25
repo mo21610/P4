@@ -10,16 +10,14 @@
 </head>
 <body>
 
-    <?php include("view/template_header_admin.php"); ?>
-
-    <a class="btn btn-secondary" href="view/postAdminView.php">Retour à la liste des billets</a>
+    <?php include("template_header_admin.php"); ?>
    
     <!-- Affichage commentaires correspondant au post -->
     <?php foreach ($commentsReport as $commentReport){ ?>
         <p><?= $commentReport->author() ?> le <?= $commentReport->dateComment() ?></p>
         <p><?= $commentReport->comment() ?></p>
-        <a class="btn btn-danger" href="controller/delete_comment.php?comment=<?= $commentReport->id(); ?>">Supprimer</a>
-        <a class="btn btn-info" href="report.php?comment=<?= $commentReport->id(); ?>&report=<?= $commentReport->report() ?>">Autoriser affichage commentaire</a>
+        <a class="btn btn-danger" href="../controller/index.php?action=commentsReport&comment=<?= $commentReport->id(); ?>">Supprimer</a>
+        <a class="btn btn-info" href="../controller/index.php?action=commentsReport&comment=<?= $commentReport->id(); ?>&report=<?= $commentReport->report() ?>">Autoriser affichage commentaire</a>
     <?php } ?>
 </body>
 </html>
