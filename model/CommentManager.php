@@ -17,7 +17,13 @@
         }
 
 
-        // Insertion commentaires dans BDD
+        /**
+         * Insertion des commentaires dans BDD
+         *
+         * @param  mixed $comment
+         *
+         * @return void
+         */
         public function addComment(Comment $comment){
             $reqInsertComment = $this->_db->prepare('INSERT INTO comments (id_post, author, comment, date_comment, report) VALUES(:id_post, :author, :comment, NOW(), 0)'); // Requête sans la partie variable
             $reqInsertComment->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
@@ -27,7 +33,13 @@
             ));
         }
 
-        // Recuperation commentaires dans BDD
+        /**
+         * Recuperation des commentaires correspondant au post 
+         *
+         * @param  mixed $id
+         *
+         * @return void
+         */
         public function getComment($id) {
             $comments = [];
             $req = $this->_db->prepare("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment, report FROM comments WHERE id_post = :id_post AND report = 0 ORDER BY date_comment");
@@ -40,10 +52,12 @@
             return $comments;
         }
 
-        // Recuperation commentaires signalé
+        /**
+         * Recuperation commentaires signalés
+         *
+         * @return void
+         */
         public function getCommentReport() {
-            var_dump($this);
-                die();
             $commentsReport = [];
             $req = $this->_db->query("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment, report FROM comments WHERE report = 1 ORDER BY date_comment");
             while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
@@ -52,7 +66,13 @@
             return $commentsReport;
         }
 
-        // Suppression commentaire signalés BDD
+        /**
+         * Suppression commentaires signalés
+         *
+         * @param  mixed $id
+         *
+         * @return void
+         */
         public function deleteComment($id) {
             $req = $this->_db->prepare('DELETE FROM comments WHERE id = :id ');
             $req->execute(array( 
@@ -61,7 +81,13 @@
 
         }
 
-        // Modification commentaires non signalé en signalé
+        /**
+         * Modification commentaires en commentaires signalés
+         *
+         * @param  mixed $comment
+         *
+         * @return void
+         */
         public function updateComment(Comment $comment) {
             $req = $this->_db->prepare('UPDATE comments SET report = 1 WHERE id = :id ');
             $req->execute(array( 
@@ -69,7 +95,13 @@
             ));
         }
 
-        // Modification commentaires signalé en non signalé
+        /**
+         * Modification commentaires signalés en non signalés
+         *
+         * @param  mixed $comment
+         *
+         * @return void
+         */
         public function updateCommentReport(Comment $comment) {
             $req = $this->_db->prepare('UPDATE comments SET report = 0 WHERE id = :id ');
             $req->execute(array( 

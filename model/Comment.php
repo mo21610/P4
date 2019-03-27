@@ -11,6 +11,7 @@ class Comment {
         $this->hydrate($data);
     }
     
+    // Hydratation
     public function hydrate(Array $data) {
         if (isset($data['id'])) {
             $this->setId($data['id']);
@@ -32,7 +33,8 @@ class Comment {
         }
     }
 
-    /*getters*/
+    
+    // Getters
     public function id() {
         return $this->_id;
     }
@@ -52,7 +54,8 @@ class Comment {
         return $this->_report;
     }
 
-    // setters
+    
+    // Setters
     public function setId($id) {
         $this->_id = $id;
     }

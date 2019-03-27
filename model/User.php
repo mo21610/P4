@@ -8,6 +8,7 @@ class User {
         $this->hydrate($dataUser);
     }
     
+    // Hydratation
     public function hydrate(Array $dataUser) {
         if (isset($dataUser['id'])) {
             $this->setId($dataUser['id']);

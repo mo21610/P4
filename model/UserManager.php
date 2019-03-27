@@ -13,7 +13,14 @@
             }
         }
 
-        // Recuperation de la table user
+        
+        /**
+         * Recuperation de toute la table user
+         *
+         * @param  mixed $username
+         *
+         * @return void
+         */
         public function getUser($username) {
             $req = $this->_db->prepare("SELECT * FROM users WHERE username = :username");
             $req->execute(array(
@@ -24,7 +31,13 @@
             return $user;
         }
 
-        // Insertion nouvel utilisateur dans DB
+        /**
+         * Insertion nouvelle ligne dans table user
+         *
+         * @param  mixed $user
+         *
+         * @return void
+         */
         public function userInsert(User $user){
             $req = $this->_db->prepare('INSERT INTO users(username, password) VALUES(:username, :password)');
             $req->execute(array(

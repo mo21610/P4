@@ -1,13 +1,14 @@
 <?php
 
-    require_once 'Controller.php';
+    require_once 'controller/Controller.php';
+
 
     if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'readAllPostAdmin') {
-            Controller::readAllPostAdmin();
+        if ($_GET['action'] == 'postsAdmin') {
+            Controller::postsAdmin();
         }
-        elseif ($_GET['action'] == 'readAllPost') {
-            Controller::readAllPost();
+        elseif ($_GET['action'] == 'posts') {
+            Controller::posts();
         }
         elseif ($_GET['action'] == 'post') {
             if (isset($_GET['post'])) {
@@ -37,6 +38,6 @@
         }
     }
     else {
-        Controller::readAllPost();
+        Controller::posts();
     }
 

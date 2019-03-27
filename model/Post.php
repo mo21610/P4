@@ -9,6 +9,7 @@ class Post {
         $this->hydrate($dataPost);
     }
     
+    // Hydratation
     public function hydrate(Array $dataPost) {
         if (isset($dataPost['id'])) {
             $this->setId($dataPost['id']);
