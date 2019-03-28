@@ -1,4 +1,7 @@
 <?php
+
+namespace MG\P4\Model;
+
 class Post {
     private $_id;
     private $_title;

@@ -1,4 +1,8 @@
 <?php
+
+    namespace MG\P4\Model;
+    use \PDO;
+
     class PostManager {
         private $_db;
 

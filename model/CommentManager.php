@@ -1,9 +1,10 @@
 <?php
 
-    require"Manager.php";
+    namespace MG\P4\Model;
+    use \PDO;
 
-    class CommentManager extends Manager {
-        // private $_db;
+    class CommentManager {
+        private $_db;
 
         public function __construct() {
             try // Connexion à la BDD

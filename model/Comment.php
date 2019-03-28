@@ -1,13 +1,16 @@
 <?php
-class Comment {
-    private $_id;
-    private $_idPost;
-    private $_author;
-    private $_comment;
-    private $_dateComment;
-    private $_report;
 
-    public function __construct(Array $data) {
+    namespace MG\P4\Model;
+
+    class Comment {
+        private $_id;
+        private $_idPost;
+        private $_author;
+        private $_comment;
+        private $_dateComment;
+        private $_report;
+
+        public function __construct(Array $data) {
         $this->hydrate($data);
     }
     

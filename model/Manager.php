@@ -1,5 +1,7 @@
 <?php
 
+    namespace MG\P4\Model;
+
     class Manager {
 
         private $_db;

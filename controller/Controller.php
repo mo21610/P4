@@ -2,6 +2,14 @@
 
     session_start();
 
+    use \MG\P4\Model\Comment;
+    use \MG\P4\Model\CommentManager;
+    use \MG\P4\Model\Post;
+    use \MG\P4\Model\PostManager;
+    use \MG\P4\Model\User;
+    use \MG\P4\Model\UserManager;
+
+
     require_once ('model/Post.php');
     require_once ('model/PostManager.php');
     require_once ('model/Comment.php');
