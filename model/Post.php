@@ -1,6 +1,7 @@
 <?php
 
 namespace MG\P4\Model;
+use \MG\P4\Model\Manager;
 
 class Post {
     private $_id;

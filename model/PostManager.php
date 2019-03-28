@@ -1,9 +1,16 @@
 <?php
+    
+    
 
     namespace MG\P4\Model;
     use \PDO;
+    use \MG\P4\Model\Manager;
 
-    class PostManager {
+    require_once("Manager.php");
+
+    class PostManager extends Manager {
+    
+
         private $_db;
 
         public function __construct() {
@@ -25,7 +32,10 @@
          * @return void
          */
         public function getPost($id) {
-            $req = $this->_db->query("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%imin%ss') AS date_post FROM admin WHERE id = " .$id);
+            $req = $this->_db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%imin%ss') AS date_post FROM admin WHERE id = :id ");
+            $req->execute(array( 
+                'id' => $id,
+            ));
             $dataPost = $req->fetch(PDO::FETCH_ASSOC);
             $postDataOne = new Post($dataPost);
             return $postDataOne;
@@ -38,7 +48,8 @@
          */
         public function getPosts(){
             $allPosts = [];
-            $req = $this->_db->query('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post FROM admin ORDER BY id DESC');
+            $req = $this->_db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post FROM admin ORDER BY id DESC');
+            $req->execute(array());
             while ($dataPost = $req->fetch(PDO::FETCH_ASSOC)) {
                 $allPosts[] = new Post($dataPost);
             }

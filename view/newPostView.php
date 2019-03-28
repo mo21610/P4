@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="public/css/style_admin.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src='https://cloud.tinymce.com/5/tinymce.min.js?apiKey=9u2qxxf7nxkp9jfgfp3esqbfnm2hfvwxk26x40piohsyjkmm'></script>
+    <script>
+        tinymce.init({
+          selector: '#mytextarea'
+        });
+    </script>
     <title>Page d'édition des billets du blog</title>
 </head>
 
@@ -17,7 +23,8 @@
         <label for="title">Titre :</label>
         <input type="text" id="title" class="form-control" name="title">
         <label for="text">Texte :</label>
-        <textarea name="post" id="text" class="form-control" cols="100" rows="10"></textarea><br>
+        <textarea id="mytextarea" name="post"></textarea>
+        <!-- <textarea name="post" id="text" class="form-control" cols="100" rows="10"></textarea><br> -->
         <button type="submit" class="btn btn-dark">Publier</button>
     </form>
 

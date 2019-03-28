@@ -201,7 +201,17 @@
                     $validation = false;
                 }
                 
-               if ($validation == true){
+                if ($validation == true){
+                    // $username = $_POST['username'];
+                    // $userManager = new UserManager;
+                    // $user = $userManager->getUser($username);
+                    // $usernamebd = $user->username();
+                    // var_dump($usernamebd);
+
+                    // if ($username == $usernamebd) {
+                    //     echo "Pseudo déjà utilisé";
+                    // }
+
                     if($_POST['password'] != $_POST['confirm_password']) {
                         echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
                         $validation = false;
@@ -217,7 +227,7 @@
                         $userManagerInsert = new UserManager;
                         $userManagerInsert->userInsert($userInsert);
                         
-                        header("Location: index.php?action=userInsert");
+                        header("Location: index.php?action=login");
                         exit();
                     }
                 }
@@ -242,7 +252,10 @@
                     $username = $_POST['username'];
                     $userManager = new UserManager;
                     $user = $userManager->getUser($username);
-                    if ($user) {
+                    if (!$user) {
+                        echo 'Mauvais identifiant';
+                    }
+                    else {
                         $isPasswordCorrect = password_verify($_POST['password'], $user->password());
                         if($isPasswordCorrect) {
                             $_SESSION['user'] = $user->password();

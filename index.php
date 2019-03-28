@@ -38,6 +38,11 @@
         }
     }
     else {
-        Controller::posts();
+        if (isset($_SESSION['user'])) {
+            Controller::postsAdmin();
+        }
+        else {
+            Controller::posts();
+        }
     }
 

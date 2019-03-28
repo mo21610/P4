@@ -2,6 +2,7 @@
 
     namespace MG\P4\Model;
     use \PDO;
+    use \MG\P4\Model\Manager;
 
     class UserManager {
         private $_db;
@@ -28,7 +29,7 @@
         public function getUser($username) {
             $req = $this->_db->prepare("SELECT * FROM users WHERE username = :username");
             $req->execute(array(
-                'username' => $username
+                'username' => $username,
             ));
             $dataUser = $req->fetch(PDO::FETCH_ASSOC);
             $user = new User($dataUser);

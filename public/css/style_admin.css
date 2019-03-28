@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Montserrat';
+    src: url('..\police\Montserrat-Bold.otf');
+}
 body
 {
     margin: 0;
@@ -8,4 +11,13 @@ body
 {
     padding-right: -15px;
     padding-left: -15px;
+}
+h1
+{
+    font-family: 'Montserrat';
+    font-size: 10em;
+}
+#menu
+{
+    font-size: 10em;
 }

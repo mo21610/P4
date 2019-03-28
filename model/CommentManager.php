@@ -2,6 +2,7 @@
 
     namespace MG\P4\Model;
     use \PDO;
+    use \MG\P4\Model\Manager;
 
     class CommentManager {
         private $_db;
@@ -60,7 +61,10 @@
          */
         public function getCommentReport() {
             $commentsReport = [];
-            $req = $this->_db->query("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment, report FROM comments WHERE report = 1 ORDER BY date_comment");
+            $req = $this->_db->prepare("SELECT id, id_post, author, comment, DATE_FORMAT(date_comment, '%d/%m/%Y à %Hh%imin%ss') AS date_comment, report FROM comments WHERE report = :report ORDER BY date_comment");
+            $req->execute(array(
+                'report' => 1,
+                ));
             while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
                 $commentsReport[] = new Comment($data);
             }
