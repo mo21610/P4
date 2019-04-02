@@ -18,7 +18,7 @@
         public static function posts() {
             $postsManager = new PostManager;
             $posts = $postsManager->getPosts();
-            require ('view/viewFrontend/listPostView.php');
+            require ('view/viewFrontend/posts.php');
         }
 
 
@@ -60,7 +60,7 @@
                     exit();
                 }
             }
-            require ('view/viewFrontend/postView.php');
+            require ('view/viewFrontend/post.php');
         }
 
     }

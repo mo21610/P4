@@ -24,13 +24,7 @@
             }
         }
 
-        /**
-         * Recuparation du post selectionné
-         *
-         * @param  mixed $id
-         *
-         * @return void
-         */
+
         public function getPost($id) {
             $req = $this->_db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%i') AS date_post FROM admin WHERE id = :id ");
             $req->execute(array( 
@@ -41,11 +35,7 @@
             return $postDataOne;
         }
 
-        /**
-         * Recuparation de tous les posts
-         *
-         * @return void
-         */
+   
         public function getPosts(){
             $allPosts = [];
             $req = $this->_db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin\') AS date_post FROM admin ORDER BY id DESC');
@@ -56,13 +46,7 @@
             return $allPosts;
         }
 
-        /**
-         * Supression d'un post
-         *
-         * @param  mixed $id
-         *
-         * @return void
-         */
+      
         public function deletePost($id) {
             $req = $this->_db->prepare('DELETE FROM admin WHERE id = :id ');
             $req->execute(array( 
@@ -70,13 +54,7 @@
             ));
         }
 
-         /**
-          * Insertion d'un post
-          *
-          * @param  mixed $post
-          *
-          * @return void
-          */
+     
          public function addPost(Post $post){
             $req = $this->_db->prepare('INSERT INTO admin (title, post, date_post) VALUES(:title, :post, NOW())'); // Requête sans la partie variable
             $req->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
@@ -86,13 +64,6 @@
         }
 
 
-        /**
-         * Modification d'un post
-         *
-         * @param  mixed $post
-         *
-         * @return void
-         */
         public function updatePost(Post $post) {
             $reqEdit = $this->_db->prepare('UPDATE admin SET title = :title_edit, post = :post_edit WHERE id = :id');
             $reqEdit->execute(array(

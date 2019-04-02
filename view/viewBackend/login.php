@@ -19,7 +19,7 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
             </form>
         </div>
-        <a href="index.php?action=userInsert">Créer un nouvel espace membre</a>
+        <a href="index.php?action=registration">Créer un nouvel espace membre</a>
     </div>
 
 </body>

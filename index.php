@@ -24,8 +24,8 @@
         elseif ($_GET['action'] == 'updatePost') {
             ControllerBackend::updatePost();
         }
-        elseif ($_GET['action'] == 'userInsert') {
-            ControllerBackend::userInsert();
+        elseif ($_GET['action'] == 'registration') {
+            ControllerBackend::registration();
         }
         elseif ($_GET['action'] == 'login') {
             ControllerBackend::login();

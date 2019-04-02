@@ -40,7 +40,7 @@
                 exit();
             }
             
-            require ('view/viewBackend/postAdminView.php');
+            require ('view/viewBackend/postsAdmin.php');
         }
 
 
@@ -62,7 +62,7 @@
                     exit();
                 }
             }
-            require ('view/viewBackend/newPostView.php');        
+            require ('view/viewBackend/newPost.php');        
         }
 
 
@@ -87,7 +87,7 @@
                 header('Location: index.php?action=commentsReport');
                 exit();
             }
-            require ('view/viewBackend/commentsReportView.php');           
+            require ('view/viewBackend/commentsReport.php');           
         }
 
 
@@ -108,11 +108,11 @@
                 header('Location: index.php?action=postsAdmin');
                 exit();      
             }
-            require ('view/viewBackend/postUpdateView.php');           
+            require ('view/viewBackend/updatePost.php');           
         }
 
 
-        public static function userInsert() {
+        public static function registration() {
             if(!empty($_POST)) { 
                 $validation = true;
                 
@@ -120,33 +120,35 @@
                     echo "Veuillez renseigner tous les champs";
                     $validation = false;
                 }
-                $userManager = new UserManager;
-                if ($userManager->getUser($_POST['username']) != false) {
-                    $validation = false;
-                    echo "Pseudo déjà utilisé";              
-                }
-                if($_POST['password'] != $_POST['confirm_password']) {
-                    echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
-                    $validation = false;
-                } 
+                else {
+                    $userManager = new UserManager;
+                    if ($userManager->getUser($_POST['username']) != false) {
+                        $validation = false;
+                        echo "Pseudo déjà utilisé";              
+                    }
+                    elseif($_POST['password'] != $_POST['confirm_password']) {
+                        echo "Veuillez inscrire les même mots de passe";
+                        $validation = false;
+                    } 
 
-                if ($validation == true){           
-                     // Hachage du mot de passe
-             
-                        $pass_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    
-                        $userInsert = new User([
-                            'username' => $_POST['username'],
-                            'password' => $pass_hash,
-                        ]);
-                        $userManager->userInsert($userInsert);
-                        
-                        header("Location: index.php?action=login");
-                        exit();
+                    if ($validation == true){           
+                         // Hachage du mot de passe
                     
+                            $pass_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    
+                            $registration = new User([
+                                'username' => $_POST['username'],
+                                'password' => $pass_hash,
+                            ]);
+                            $userManager->registration($registration);
+                            
+                            header("Location: index.php?action=login");
+                            exit();
+                            
+                    }
                 }
             }
-            require ('view/viewBackend/registrationView.php');             
+            require ('view/viewBackend/registration.php');             
         }
 
 
@@ -177,7 +179,7 @@
                     }                             
                 }
             }
-            require ('view/viewBackend/loginView.php');
+            require ('view/viewBackend/login.php');
         }
 
         public static function signOut() {
