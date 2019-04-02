@@ -16,15 +16,15 @@
 </head>
 
 <body>
-
     <?php include("template_header_admin.php"); ?>
+
+    <?php $session->flash(); ?>
 
     <form class="offset-1 col-md-10" action="index.php?action=newPost" method="post">
         <label for="title">Titre :</label>
         <input type="text" id="title" class="form-control" name="title">
         <label for="text">Texte :</label>
-        <textarea id="mytextarea" name="post"></textarea>
-        <!-- <textarea name="post" id="text" class="form-control" cols="100" rows="10"></textarea><br> -->
+        <textarea id="mytextarea" name="post" cols="100" rows="8"></textarea>
         <button type="submit" class="btn btn-dark">Publier</button>
     </form>
 

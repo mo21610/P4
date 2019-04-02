@@ -10,14 +10,14 @@
 </head>
 
 <body class="container text-center">
-    <div class="form-login">
-        <h3>Création d'un nouvel espace utilisateur</h3>
+    <div class="form_login">
+        <h3>Nouvel espace administrateur</h3>
         <div class="row">
-            <form class="offset-3 col-md-6 col-xs-12" action="index.php?action=userInsert" method="post">       
+            <form class="offset-4 col-md-4 col-xs-12" action="index.php?action=userInsert" method="post">       
                 <input class="form-control" name="username" placeholder="Pseudo" type="text">        
                 <input class="form-control" name="password" placeholder="Mot de passe" type="password">
-                <input class="form-control" name="confirm_password" placeholder="Confirmation du mot de passe" type="password">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Créer un nouvel espace membre</button>
+                <input class="form-control" name="confirm_password" placeholder="Confirmation mot de passe" type="password">
+                <button class="btn btn-lg btn-success btn-block" type="submit">Créer un nouvel espace</button>
             </form>
         </div>
     </div>

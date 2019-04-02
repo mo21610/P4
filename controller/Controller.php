@@ -8,6 +8,7 @@
     use \MG\P4\Model\PostManager;
     use \MG\P4\Model\User;
     use \MG\P4\Model\UserManager;
+    use \MG\P4\Model\Session;
 
 
     require_once ('model/Post.php');
@@ -16,6 +17,9 @@
     require_once ('model/CommentManager.php');
     require_once ('model/User.php');
     require_once ('model/UserManager.php');
+    require_once ('model/Session.php');
+
+
 
 
     class Controller {      
@@ -165,9 +169,7 @@
          *
          * @return void
          */
-        public static function updatePost() {
-            $id_post = $_GET['post'];
-            
+        public static function updatePost() {            
             $postManager = new PostManager;
             $post = $postManager->getPost($_GET['post']);
 
@@ -200,36 +202,30 @@
                     echo "Veuillez renseigner tous les champs";
                     $validation = false;
                 }
-                
-                if ($validation == true){
-                    // $username = $_POST['username'];
-                    // $userManager = new UserManager;
-                    // $user = $userManager->getUser($username);
-                    // $usernamebd = $user->username();
-                    // var_dump($usernamebd);
+                $userManager = new UserManager;
+                if ($userManager->getUser($_POST['username']) != false) {
+                    $validation = false;
+                    echo "Pseudo déjà utilisé";              
+                }
+                if($_POST['password'] != $_POST['confirm_password']) {
+                    echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
+                    $validation = false;
+                } 
 
-                    // if ($username == $usernamebd) {
-                    //     echo "Pseudo déjà utilisé";
-                    // }
-
-                    if($_POST['password'] != $_POST['confirm_password']) {
-                        echo "Veuillez inscrire le même mot de passe dans mot de passe et confirmation mot de passe";
-                        $validation = false;
-                    } 
+                if ($validation == true){           
                      // Hachage du mot de passe
-                    else {
+             
                         $pass_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
     
                         $userInsert = new User([
                             'username' => $_POST['username'],
                             'password' => $pass_hash,
                         ]);
-                        $userManagerInsert = new UserManager;
-                        $userManagerInsert->userInsert($userInsert);
+                        $userManager->userInsert($userInsert);
                         
                         header("Location: index.php?action=login");
                         exit();
-                    }
+                    
                 }
             }
             require ('view/registrationView.php');             
@@ -280,6 +276,13 @@
         session_destroy();
         header('Location:index.php?action=login');
         exit();
+        }
+
+        public static function session() {
+            $session = new Session;
+            $session->setflash('Mon message');
+            echo'test';
+            require ('view/newPostView.php');
         }
 
     }

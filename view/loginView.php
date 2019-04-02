@@ -10,10 +10,10 @@
 </head>
 
 <body class="container text-center">
-    <div class="form-login">
+    <div class="form_login">
         <h3>Veuillez vous connecter</h3>
         <div class="row">
-            <form class="offset-3 col-md-6 col-xs-12" action="index.php?action=login" method="post">       
+            <form class="offset-4 col-md-4 col-xs-12" action="index.php?action=login" method="post">       
                 <input class="form-control" name="username" placeholder="username" type="text">        
                 <input class="form-control" name="password" placeholder="password" type="password">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>

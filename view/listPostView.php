@@ -11,13 +11,16 @@
 </head>
 
 <body>
+    
+    <?php $title = "Billet simple pour l'Alaska" ?>
+    <?php include("template_header.php"); ?>
 
     <?php foreach ($posts as $post) { ?> 
-        <div class="jumbotron offset-1 col-md-10 text-white bg-dark">
-            <h2 class="font-italic"><?= nl2br(htmlspecialchars($post->title())) ?></h2>
+        <div class="jumbotron offset-1 col-md-10 text-white bg-dark" id="posts">
+            <h2 class="font-italic" id="h2_list_post"><?= nl2br(htmlspecialchars($post->title())) ?></h2>
             <p><?= nl2br(htmlspecialchars($post->post())) ?></p>
-            <p>Le <?= nl2br(htmlspecialchars($post->datePost())) ?></p>
-            <a href="index.php?action=post&post=<?= $post->id(); ?>">Lire la suite</a>
+            <p><i>Le <?= nl2br(htmlspecialchars($post->datePost())) ?></i></p>
+            <a href="index.php?action=post&post=<?= $post->id(); ?>"><i>Lire la suite</i></a>
         </div>
     <?php } ?>  
 

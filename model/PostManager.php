@@ -32,7 +32,7 @@
          * @return void
          */
         public function getPost($id) {
-            $req = $this->_db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%imin%ss') AS date_post FROM admin WHERE id = :id ");
+            $req = $this->_db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%i') AS date_post FROM admin WHERE id = :id ");
             $req->execute(array( 
                 'id' => $id,
             ));
@@ -48,7 +48,7 @@
          */
         public function getPosts(){
             $allPosts = [];
-            $req = $this->_db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post FROM admin ORDER BY id DESC');
+            $req = $this->_db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin\') AS date_post FROM admin ORDER BY id DESC');
             $req->execute(array());
             while ($dataPost = $req->fetch(PDO::FETCH_ASSOC)) {
                 $allPosts[] = new Post($dataPost);

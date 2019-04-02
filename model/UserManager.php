@@ -32,8 +32,14 @@
                 'username' => $username,
             ));
             $dataUser = $req->fetch(PDO::FETCH_ASSOC);
-            $user = new User($dataUser);
-            return $user;
+            if ($dataUser) {
+                $user = new User($dataUser);
+                return $user;
+            }
+            else {
+                false;
+            }
+            
         }
 
         /**
