@@ -10,7 +10,6 @@
     use \MG\P4\Model\UserManager;
     use \MG\P4\Model\Session;
 
-
     require_once ('model/Post.php');
     require_once ('model/PostManager.php');
     require_once ('model/Comment.php');
@@ -22,14 +21,8 @@
 
 
 
-    class Controller {      
+    class ControllerBackend {      
 
-
-        /**
-         * Affiche tous les post coté back end
-         *
-         * @return array
-         */
         public static function postsAdmin() {
             if (isset($_SESSION['flash'])) {
                 echo $_SESSION['flash'];
@@ -47,73 +40,10 @@
                 exit();
             }
             
-            require ('view/postAdminView.php');
-        }
-
-        
-        /**
-         * Affiche tous les post coté front end
-         *
-         * @return void
-         */
-        public static function posts() {
-            $postsManager = new PostManager;
-            $posts = $postsManager->getPosts();
-            require ('view/listPostView.php');
-        }
-
-        /**
-         * Affiche la suite du post sélectionné avec ses commentaires associés
-         *
-         * @return void
-         */
-        public static function post() {
-            $id_post = $_GET['post'];
-            
-            $postManager = new PostManager;
-            $post = $postManager->getPost($_GET['post']);
-            
-            $commentManager = new CommentManager;
-            $comments = $commentManager->getComment($_GET['post']);
-            
-            if(isset($_GET['report'])) {
-                $commentUpdate = new Comment([
-                    'id' => $_GET['comment'],
-                ]);
-                $commentManagerUpdate = new CommentManager;
-                $commentManagerUpdate->updateComment($commentUpdate);   
-                 
-                header("Location: index.php?action=post&post=$id_post");
-                exit();
-            }
-
-            elseif(!empty($_POST['author']) || !empty($_POST['comment'])) {
-                $validation = true;
-                if (empty($_POST['author']) || empty($_POST['comment'])) {
-                    $validation = false;
-                }
-                if ($validation == true) {
-                    $commentInsert = new Comment([
-                        'id_post' => $_GET['post'],
-                        'author' => $_POST['author'],
-                        'comment' => $_POST['comment'],
-                    ]);        
-                    $commentManagerInsert = new CommentManager;
-                    $commentManagerInsert->addComment($commentInsert);
-    
-                    header("Location: index.php?action=post&post=$id_post");
-                    exit();
-                }
-            }
-            require ('view/postView.php');
+            require ('view/viewBackend/postAdminView.php');
         }
 
 
-        /**
-         * Ajoute un nouveau post dans la BDD
-         *
-         * @return void
-         */
         public static function newPost() {
             if (!empty($_POST)) {
                 $validation = true;       
@@ -132,14 +62,10 @@
                     exit();
                 }
             }
-            require ('view/newPostView.php');        
+            require ('view/viewBackend/newPostView.php');        
         }
 
-        /**
-         * Modifie le commentaire signalé en visible sur le blog ou bien le supprime
-         *
-         * @return void
-         */
+
         public static function commentsReport() {
             $commentManagerReport = new CommentManager;
             $commentsReport = $commentManagerReport->getCommentReport();
@@ -161,14 +87,10 @@
                 header('Location: index.php?action=commentsReport');
                 exit();
             }
-            require ('view/commentsReportView.php');           
+            require ('view/viewBackend/commentsReportView.php');           
         }
 
-        /**
-         * Modification du post dans BDD
-         *
-         * @return void
-         */
+
         public static function updatePost() {            
             $postManager = new PostManager;
             $post = $postManager->getPost($_GET['post']);
@@ -186,14 +108,10 @@
                 header('Location: index.php?action=postsAdmin');
                 exit();      
             }
-            require ('view/postUpdateView.php');           
+            require ('view/viewBackend/postUpdateView.php');           
         }
 
-        /**
-         * Insertion espace utilisateur dans BDD
-         *
-         * @return void
-         */
+
         public static function userInsert() {
             if(!empty($_POST)) { 
                 $validation = true;
@@ -228,15 +146,10 @@
                     
                 }
             }
-            require ('view/registrationView.php');             
+            require ('view/viewBackend/registrationView.php');             
         }
 
-        
-        /**
-         * Connexion espace admin avec ouverture de session
-         *
-         * @return void
-         */
+
         public static function login() {
             if(!empty($_POST)) { 
                 $validation = true;
@@ -264,32 +177,13 @@
                     }                             
                 }
             }
-            require ('view/loginView.php');
+            require ('view/viewBackend/loginView.php');
         }
 
-        /**
-         * Deconnexion espace admin avec fermuture de session
-         *
-         * @return void
-         */
         public static function signOut() {
-        session_destroy();
-        header('Location:index.php?action=login');
-        exit();
-        }
-
-        public static function session() {
-            $session = new Session;
-            $session->setflash('Mon message');
-            echo'test';
-            require ('view/newPostView.php');
+            session_destroy();
+            header('Location:index.php?action=login');
+            exit();
         }
 
     }
-
-
-        
-
-    
- 
-

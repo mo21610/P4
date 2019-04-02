@@ -1,37 +1,37 @@
 <?php
 
-    require_once 'controller/Controller.php';
-
+    require_once 'controller/ControllerFrontend.php';
+    require_once 'controller/ControllerBackend.php';
 
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'postsAdmin') {
-            Controller::postsAdmin();
+            ControllerBackend::postsAdmin();
         }
         elseif ($_GET['action'] == 'posts') {
-            Controller::posts();
+            ControllerFrontend::posts();
         }
         elseif ($_GET['action'] == 'post') {
             if (isset($_GET['post'])) {
-                Controller::post();
+                ControllerFrontend::post();
             }
         }
         elseif ($_GET['action'] == 'newPost') {
-            Controller::newPost();
+            ControllerBackend::newPost();
         }
         elseif ($_GET['action'] == 'commentsReport') {
-            Controller::commentsReport();
+            ControllerBackend::commentsReport();
         }
         elseif ($_GET['action'] == 'updatePost') {
-            Controller::updatePost();
+            ControllerBackend::updatePost();
         }
         elseif ($_GET['action'] == 'userInsert') {
-            Controller::userInsert();
+            ControllerBackend::userInsert();
         }
         elseif ($_GET['action'] == 'login') {
-            Controller::login();
+            ControllerBackend::login();
         }
         elseif ($_GET['action'] == 'signOut') {
-            Controller::signOut();
+            ControllerBackend::signOut();
         }
         else {
             echo 'Erreur : aucun identifiant de billet envoyé';
@@ -39,10 +39,10 @@
     }
     else {
         if (isset($_SESSION['user'])) {
-            Controller::postsAdmin();
+            ControllerBackend::postsAdmin();
         }
         else {
-            Controller::posts();
+            ControllerFrontend::posts();
         }
     }
 
