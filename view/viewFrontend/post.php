@@ -10,9 +10,11 @@
 </head>
 
 <body>
+
     <?php $title = $post->title(); ?>
 
     <?php include("template_header.php"); ?>
+
 
     <div class="container-fluid">
         

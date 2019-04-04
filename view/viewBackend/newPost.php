@@ -18,8 +18,6 @@
 <body>
     <?php include("template_header_admin.php"); ?>
 
-    <?php $session->flash(); ?>
-
     <form class="offset-1 col-md-10" action="index.php?action=newPost" method="post">
         <label for="title">Titre :</label>
         <input type="text" id="title" class="form-control" name="title">

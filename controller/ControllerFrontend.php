@@ -6,11 +6,13 @@
     use \MG\P4\Model\PostManager;
     use \MG\P4\Model\User;
     use \MG\P4\Model\UserManager;
+    use \MG\P4\Model\Session;
 
     require_once ('model/Post.php');
     require_once ('model/PostManager.php');
     require_once ('model/Comment.php');
     require_once ('model/CommentManager.php');
+    require_once ('model/Session.php');
 
 
     class ControllerFrontend {   
@@ -24,6 +26,9 @@
 
         public static function post() {
             $id_post = $_GET['post'];
+
+            $session = new Session;
+            $session->flash();
             
             $postManager = new PostManager;
             $post = $postManager->getPost($_GET['post']);
@@ -36,7 +41,9 @@
                     'id' => $_GET['comment'],
                 ]);
                 $commentManagerUpdate = new CommentManager;
-                $commentManagerUpdate->updateComment($commentUpdate);   
+                $commentManagerUpdate->updateComment($commentUpdate);
+                
+                $session->setFlash('Le commentaire a bien été signalé');
                  
                 header("Location: index.php?action=post&post=$id_post");
                 exit();
@@ -55,6 +62,8 @@
                     ]);        
                     $commentManagerInsert = new CommentManager;
                     $commentManagerInsert->addComment($commentInsert);
+
+                    $session->setFlash('Votre commentaire a bien été publié');
     
                     header("Location: index.php?action=post&post=$id_post");
                     exit();
