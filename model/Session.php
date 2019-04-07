@@ -3,10 +3,6 @@
     namespace MG\P4\Model;
 
     class Session {
-
-        public function __construct() {
-            session_start();
-        }
         
         public function setFlash($message,$type = 'success') {
             $_SESSION['flash'] = array(

@@ -4,13 +4,13 @@
     use \PDO;
     use \MG\P4\Model\Manager;
 
-    class UserManager {
+    class UserManager extends Manager {
         private $_db;
 
         public function __construct() {
             try // Connexion à la BDD
             {
-                $this->_db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+                $this->_db = new PDO( 'mysql:host=localhost;dbname=blog','root','');
             }
             catch(Exception $e)
             {

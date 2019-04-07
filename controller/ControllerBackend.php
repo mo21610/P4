@@ -1,6 +1,6 @@
 <?php
 
-    // session_start();
+    session_start();
 
     use \MG\P4\Model\Comment;
     use \MG\P4\Model\CommentManager;
@@ -78,16 +78,7 @@
             $session = new Session;
             $session->flash();
 
-            if (isset($_GET['comment'])) {
-                $commentManagerDelete = new CommentManager;
-                $commentDelete = $commentManagerDelete->deleteComment($_GET['comment']);
-
-                $session->setFlash('Le commentaire a bien été supprimé');
-
-                header('Location: index.php?action=commentsReport');
-                exit();
-            }
-            elseif(isset($_GET['report'])) {
+            if(isset($_GET['report'])) {
                 $commentUpdateReport = new Comment([
                     'id' => $_GET['comment'],
                 ]);
@@ -99,14 +90,32 @@
                 header('Location: index.php?action=commentsReport');
                 exit();
             }
+
+            if (isset($_GET['comment'])) {
+                    $commentManagerDelete = new CommentManager;
+                    $commentDelete = $commentManagerDelete->deleteComment($_GET['comment']);
+    
+                    $session->setFlash('Le commentaire a bien été supprimé');
+    
+                    header('Location: index.php?action=commentsReport');
+                    exit();
+                }
             require ('view/viewBackend/commentsReport.php');           
         }
 
-
         public static function updatePost() {
-            if (isset($_GET['post'])) {            
+
+            $session = new Session;
+            $session->flash();
+
+            if (!empty($_GET['post'])) {            
                 $postManager = new PostManager;
                 $post = $postManager->getPost($_GET['post']);
+
+                if(!$post) {
+                    header('Location: view/viewfrontend/error_page.php');
+                    exit();
+                }
 
                 if(isset($_POST['title_edit']) && isset($_POST['post_edit'])) {
                     $postUpdate = new Post([
@@ -127,7 +136,8 @@
                 require ('view/viewBackend/updatePost.php');
             }
             else {
-                echo 'Erreur 404';
+                header('Location: view/viewfrontend/error_page.php');
+                exit();
             }          
         }
 
@@ -141,19 +151,22 @@
                 
                 if(empty($_POST['username']) || empty($_POST['password']) || empty($_POST['confirm_password'])) {
                     $session->setFlash('Veuillez renseigner tous les champs','danger');
-                    echo "Veuillez renseigner tous les champs";
+                    header('Location: index.php?action=registration');
+                    exit(); 
                     $validation = false;
                 }
                 else {
                     $userManager = new UserManager;
                     if ($userManager->getUser($_POST['username']) != false) {
                         $session->setFlash('Pseudo déjà utilisé','danger');
+                        header('Location: index.php?action=registration');
+                        exit();
                         $validation = false;
-                        echo "Pseudo déjà utilisé";              
                     }
                     elseif($_POST['password'] != $_POST['confirm_password']) {
                         $session->setFlash('Veuillez inscrire les même mots de passe','danger');
-                        echo "Veuillez inscrire les même mots de passe";
+                        header('Location: index.php?action=registration');
+                        exit();                        
                         $validation = false;
                     } 
 
@@ -189,7 +202,8 @@
                 $validation = true;
                 if(empty($_POST['username']) || empty($_POST['password'])) {
                     $session->setFlash('Veuillez renseigner tous les champs','danger');
-                    echo "Veuillez renseigner tous les champs";
+                    header('Location: index.php?action=login');
+                    exit();
                     $validation = false;
                 }  
                 else {
@@ -198,7 +212,8 @@
                     $user = $userManager->getUser($username);
                     if (!$user) {
                         $session->setFlash('Mauvais identifiants','danger');
-                        echo 'Mauvais identifiant';
+                        header('Location: index.php?action=login');
+                        exit();
                     }
                     else {
                         $isPasswordCorrect = password_verify($_POST['password'], $user->password());
@@ -210,7 +225,8 @@
                         }
                         else {
                             $session->setFlash('Mot de passe incorrect','danger');
-                            echo 'Mot de passe incorrect';
+                            header('Location: index.php?action=login');
+                            exit();
                         }                                         
                     }                             
                 }
@@ -219,7 +235,8 @@
         }
 
         public static function signOut() {
-            session_destroy();
+            unset($_SESSION['user']);
+            // session_destroy();
             header('Location:index.php?action=login');
             exit();
         }

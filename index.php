@@ -34,7 +34,8 @@
             ControllerBackend::signOut();
         }
         else {
-            echo 'Erreur : aucun identifiant de billet envoyé';
+            header("Location: view/viewfrontend/error_page.php");
+            exit();
         }
     }
     else {

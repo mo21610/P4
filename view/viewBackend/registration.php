@@ -13,7 +13,7 @@
     <div class="form_login">
         <h3>Nouvel espace administrateur</h3>
         <div class="row">
-            <form class="offset-4 col-md-4 col-xs-12" action="index.php?action=registration" method="post">       
+            <form class="offset-md-4 col-md-4 col-sm-12" action="index.php?action=registration" method="post">       
                 <input class="form-control" name="username" placeholder="Pseudo" type="text">        
                 <input class="form-control" name="password" placeholder="Mot de passe" type="password">
                 <input class="form-control" name="confirm_password" placeholder="Confirmation mot de passe" type="password">
@@ -22,5 +22,8 @@
         </div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/main.js"></script>
+    
 </body>
 </html>

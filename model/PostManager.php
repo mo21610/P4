@@ -16,7 +16,7 @@
         public function __construct() {
             try // Connexion à la BDD
             {
-                $this->_db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+                $this->_db = new PDO( 'mysql:host=localhost;dbname=blog','root','');
             }
             catch(Exception $e)
             {
@@ -31,8 +31,13 @@
                 'id' => $id,
             ));
             $dataPost = $req->fetch(PDO::FETCH_ASSOC);
-            $postDataOne = new Post($dataPost);
-            return $postDataOne;
+            if($dataPost) {
+                $postDataOne = new Post($dataPost);
+                return $postDataOne;
+            }
+            else {
+                return false;
+            }       
         }
 
    

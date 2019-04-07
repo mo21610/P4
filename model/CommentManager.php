@@ -10,7 +10,7 @@
         public function __construct() {
             try // Connexion à la BDD
             {
-                $this->_db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+                $this->_db = new PDO( 'mysql:host=localhost;dbname=blog','root','');
             }
             catch(Exception $e)
             {

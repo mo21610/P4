@@ -29,13 +29,24 @@
 
             $session = new Session;
             $session->flash();
-            
-            $postManager = new PostManager;
-            $post = $postManager->getPost($_GET['post']);
-            
-            $commentManager = new CommentManager;
-            $comments = $commentManager->getComment($_GET['post']);
-            
+
+            if(!empty($_GET['post'])) {
+                
+                $postManager = new PostManager;
+                $post = $postManager->getPost($_GET['post']); 
+                $commentManager = new CommentManager;
+                $comments = $commentManager->getComment($_GET['post']);
+
+                if(!$post) {
+                    header('Location: view/viewfrontend/error_page.php');
+                    exit();
+                }
+            }
+            else {
+                header("Location: view/viewfrontend/error_page.php");
+                exit();   
+            }
+  
             if(isset($_GET['report'])) {
                 $commentUpdate = new Comment([
                     'id' => $_GET['comment'],
@@ -70,6 +81,6 @@
                 }
             }
             require ('view/viewFrontend/post.php');
-        }
-
+            }
+        
     }

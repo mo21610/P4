@@ -31,9 +31,9 @@
         <?php foreach ($comments as $comment) { ?>
             <table class="table">
                 <tr>
-                    <td class="col-md-2"><p><b><?= $comment->author() ?></b> <br/> Le <?= $comment->dateComment() ?></p></td>
-                    <td class="col-md-8"><p><?= $comment->comment()  ?></p></td>
-                    <td class="col-md-2"><a class="btn btn-danger" href="index.php?action=post&post=<?= $id_post ?>&comment=<?= $comment->id(); ?>&report=<?= $comment->report(); ?>">Signaler</a></td>                  
+                    <td class="col-md-1"><p><b><?= $comment->author() ?></b> <br/> Le <?= $comment->dateComment() ?></p></td>
+                    <td class="col-md-10"><p><?= $comment->comment()  ?></p></td>
+                    <td class="col-md-1"><a class="btn btn-danger" href="index.php?action=post&post=<?= $id_post ?>&comment=<?= $comment->id(); ?>&report=<?= $comment->report(); ?>">Signaler</a></td>                  
                 </tr>
             </table>
         <?php } ?>
