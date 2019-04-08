@@ -1,15 +1,14 @@
 <?php
 
-    namespace MG\P4\Model;
-    use \MG\P4\Model\Manager;
+
 
     class Comment {
-        private $_id;
-        private $_idPost;
-        private $_author;
-        private $_comment;
-        private $_dateComment;
-        private $_report;
+        private $id;
+        private $idPost;
+        private $author;
+        private $comment;
+        private $dateComment;
+        private $report;
 
         public function __construct(Array $data) {
         $this->hydrate($data);
@@ -40,42 +39,42 @@
     
     // Getters
     public function id() {
-        return $this->_id;
+        return $this->id;
     }
     public function idPost() {
-        return $this->_idPost;
+        return $this->idPost;
     }
     public function author() {
-        return $this->_author;
+        return $this->author;
     }
     public function comment() {
-        return $this->_comment;
+        return $this->comment;
     }
     public function dateComment() {
-        return $this->_dateComment;
+        return $this->dateComment;
     }
     public function report() {
-        return $this->_report;
+        return $this->report;
     }
 
     
     // Setters
     public function setId($id) {
-        $this->_id = $id;
+        $this->id = $id;
     }
     public function setIdPost($idPost) {
-        $this->_idPost = $idPost;
+        $this->idPost = $idPost;
     }
     public function setAuthor($author) {
-        $this->_author = $author;
+        $this->author = $author;
     }
     public function setComment($comment) {
-        $this->_comment = $comment;
+        $this->comment = $comment;
     }
     public function setDateComment($dateComment) {
-        $this->_dateComment = $dateComment;
+        $this->dateComment = $dateComment;
     }
     public function setReport($report) {
-        $this->_report = $report;
+        $this->report = $report;
     }
 }

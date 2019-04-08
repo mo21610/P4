@@ -1,12 +1,11 @@
 <?php
 
-namespace MG\P4\Model;
-use \MG\P4\Model\Manager;
+
 
 class User {
-    private $_id;
-    private $_username;
-    private $_password;
+    private $id;
+    private $username;
+    private $password;
 
     public function __construct(Array $dataUser) {
         $this->hydrate($dataUser);
@@ -27,23 +26,23 @@ class User {
 
     /*getters*/
     public function id() {
-        return $this->_id;
+        return $this->id;
     }
     public function username() {
-        return $this->_username;
+        return $this->username;
     }
     public function password() {
-        return $this->_password;
+        return $this->password;
     }
 
     // setters
     public function setId($id) {
-        $this->_id = $id;
+        $this->id = $id;
     }
     public function setUsername($username) {
-        $this->_username = $username;
+        $this->username = $username;
     }
     public function setPassword($password) {
-        $this->_password = $password;
+        $this->password = $password;
     }
 }

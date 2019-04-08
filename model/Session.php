@@ -1,6 +1,6 @@
 <?php
 
-    namespace MG\P4\Model;
+
 
     class Session {
         

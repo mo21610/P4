@@ -1,13 +1,12 @@
 <?php
 
-namespace MG\P4\Model;
-use \MG\P4\Model\Manager;
+
 
 class Post {
-    private $_id;
-    private $_title;
-    private $_post;
-    private $_datePost;
+    private $id;
+    private $title;
+    private $post;
+    private $datePost;
 
     public function __construct(Array $dataPost) {
         $this->hydrate($dataPost);
@@ -31,29 +30,29 @@ class Post {
 
     /*getters*/
     public function id() {
-        return $this->_id;
+        return $this->id;
     }
     public function title() {
-        return $this->_title;
+        return $this->title;
     }
     public function post() {
-        return $this->_post;
+        return $this->post;
     }
     public function datePost() {
-        return $this->_datePost;
+        return $this->datePost;
     }
 
     // setters
     public function setId($id) {
-        $this->_id = $id;
+        $this->id = $id;
     }
     public function setTitle($title) {
-        $this->_title = $title;
+        $this->title = $title;
     }
     public function setPost($post) {
-        $this->_post = $post;
+        $this->post = $post;
     }
     public function setDatePost($datePost) {
-        $this->_datePost = $datePost;
+        $this->datePost = $datePost;
     }
 }

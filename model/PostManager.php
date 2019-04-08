@@ -1,22 +1,15 @@
 <?php
     
+
+    class PostManager {
     
-
-    namespace MG\P4\Model;
-    use \PDO;
-    use \MG\P4\Model\Manager;
-
-    require_once("Manager.php");
-
-    class PostManager extends Manager {
-    
-
-        private $_db;
+        private $db;
 
         public function __construct() {
             try // Connexion à la BDD
             {
-                $this->_db = new PDO('mysql:host=db5000040901.hosting-data.io;dbname=dbs35913', 'dbu88387', '!Z4vpfh21000');
+                $this->db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+                // $this->db = new PDO('mysql:host=db5000040901.hosting-data.io;dbname=dbs35913', 'dbu88387', '!Z4vpfh21000');
             }
             catch(Exception $e)
             {
@@ -26,7 +19,7 @@
 
 
         public function getPost($id) {
-            $req = $this->_db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%i') AS date_post FROM admin WHERE id = :id ");
+            $req = $this->db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%i') AS date_post FROM admin WHERE id = :id ");
             $req->execute(array( 
                 'id' => $id,
             ));
@@ -43,7 +36,7 @@
    
         public function getPosts(){
             $allPosts = [];
-            $req = $this->_db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin\') AS date_post FROM admin ORDER BY id DESC');
+            $req = $this->db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin\') AS date_post FROM admin ORDER BY id DESC');
             $req->execute(array());
             while ($dataPost = $req->fetch(PDO::FETCH_ASSOC)) {
                 $allPosts[] = new Post($dataPost);
@@ -53,7 +46,7 @@
 
       
         public function deletePost($id) {
-            $req = $this->_db->prepare('DELETE FROM admin WHERE id = :id ');
+            $req = $this->db->prepare('DELETE FROM admin WHERE id = :id ');
             $req->execute(array( 
                 'id' => $id,
             ));
@@ -61,7 +54,7 @@
 
      
          public function addPost(Post $post){
-            $req = $this->_db->prepare('INSERT INTO admin (title, post, date_post) VALUES(:title, :post, NOW())'); // Requête sans la partie variable
+            $req = $this->db->prepare('INSERT INTO admin (title, post, date_post) VALUES(:title, :post, NOW())'); // Requête sans la partie variable
             $req->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
                 'title' => $post->title(),
                 'post' => $post->post(),
@@ -70,7 +63,7 @@
 
 
         public function updatePost(Post $post) {
-            $reqEdit = $this->_db->prepare('UPDATE admin SET title = :title_edit, post = :post_edit WHERE id = :id');
+            $reqEdit = $this->db->prepare('UPDATE admin SET title = :title_edit, post = :post_edit WHERE id = :id');
             $reqEdit->execute(array(
         	'title_edit' => $post->title(),
         	'post_edit' => $post->post(),

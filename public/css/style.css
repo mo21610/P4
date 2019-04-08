@@ -9,7 +9,7 @@
 body
 {
     margin: 0;
-    font-size: 1.4em;
+    font-size: 1.3em !important;
     font-family: OpenSansRegular, Times, serif;
 }
 #img_header
@@ -20,9 +20,9 @@ body
 }
 h1
 {
-    font-size: 5em;
+    font-size: 5.5em !important;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -40,7 +40,6 @@ h1
         background-color: #343a40;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 10em;
     }
 }
 
@@ -55,7 +54,7 @@ h1
 #return_button
 {
     text-align: right;
-    font-size: 0.6em;
+    font-size: 0.8em;
     font-weight: bold;
     margin-bottom: 20px;
 }
