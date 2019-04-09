@@ -1,13 +1,6 @@
-
-
-    
 <?php $title = "Page d'administration du blog" ?>
-
-
 <?php ob_start(); ?>
-
     <div class="container-fluid">
-
         <?php foreach ($posts as $post){ ?> 
             <table class="table table-striped">
                 <tr class=row>
@@ -18,9 +11,6 @@
                 </tr>
             </table>
         <?php } ?>
-    </div>
-
-    
-    <?php $content = ob_get_clean(); ?>
-
+    </div>  
+<?php $content = ob_get_clean(); ?>
 <?php require('template_admin.php'); ?>

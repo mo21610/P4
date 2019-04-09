@@ -9,12 +9,10 @@
     <title>Error Page</title>
 </head>
 <body>
-
     <div class="jumbotron col-md-12 text-white bg-dark text-center font-italic" id="posts">
         <h2>404</h2>
         <p>LA PAGE QUE VOUS AVEZ DEMANDE N'A PAS ETE TROUVEE</p>
         <a class="btn btn-secondary" href="../../index.php?action=posts">Retour vers la page d'accueil</a>
     </div>
-
 </body>
 </html>

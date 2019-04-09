@@ -1,79 +1,68 @@
 <?php
+require_once ('model/Post.php');
+require_once ('model/PostManager.php');
+require_once ('model/Comment.php');
+require_once ('model/CommentManager.php');
+require_once ('model/Session.php');
 
-
-    require_once ('model/Post.php');
-    require_once ('model/PostManager.php');
-    require_once ('model/Comment.php');
-    require_once ('model/CommentManager.php');
-    require_once ('model/Session.php');
-
-
-    class ControllerFrontend {   
+class ControllerFrontend {   
         
-        public static function posts() {
+    public static function posts() {
             $postsManager = new PostManager;
-            $posts = $postsManager->getPosts();
-            require ('view/viewFrontend/posts.php');
-        }
-
-
-        public static function post() {
+        $posts = $postsManager->getPosts();
+        require ('view/viewFrontend/posts.php');
+    }
+    public static function post() {
             $id_post = $_GET['post'];
-
-            $session = new Session;
-            $session->flash();
-
-            if(!empty($_GET['post'])) {
+        $session = new Session;
+        $session->flash();
+        if(!empty($_GET['post'])) {
                 
                 $postManager = new PostManager;
-                $post = $postManager->getPost($_GET['post']); 
-                $commentManager = new CommentManager;
-                $comments = $commentManager->getComment($_GET['post']);
-
-                if(!$post) {
+            $post = $postManager->getPost($_GET['post']); 
+            $commentManager = new CommentManager;
+            $comments = $commentManager->getComment($_GET['post']);
+            if(!$post) {
                     header('Location: view/viewfrontend/error_page.php');
-                    exit();
-                }
+                exit();
             }
-            else {
+        }
+        else {
                 header("Location: view/viewfrontend/error_page.php");
-                exit();   
-            }
-  
-            if(isset($_GET['report'])) {
+            exit();   
+        }
+        if(isset($_GET['report'])) {
                 $commentUpdate = new Comment([
                     'id' => $_GET['comment'],
-                ]);
-                $commentManagerUpdate = new CommentManager;
-                $commentManagerUpdate->updateComment($commentUpdate);
-                
-                $session->setFlash('Le commentaire a bien été signalé');
-                 
+            ]);
+            $commentManagerUpdate = new CommentManager;
+            $commentManagerUpdate->updateComment($commentUpdate);
+            
+            $session->setFlash('Le commentaire a bien été signalé');
+             
+            header("Location: index.php?action=post&post=$id_post");
+            exit();
+        }
+        elseif(!empty($_POST['author']) || !empty($_POST['comment'])) {
+                $validation = true;
+            if (empty($_POST['author']) || empty($_POST['comment'])) {
+                    $validation = false;
+            }
+            if ($validation == true) {
+                    $commentInsert = new Comment([
+                        'id_post' => $_GET['post'],
+                    'author' => $_POST['author'],
+                    'comment' => $_POST['comment'],
+                ]);        
+                $commentManagerInsert = new CommentManager;
+                $commentManagerInsert->addComment($commentInsert);
+                $session->setFlash('Votre commentaire a bien été publié');
+
                 header("Location: index.php?action=post&post=$id_post");
                 exit();
             }
-
-            elseif(!empty($_POST['author']) || !empty($_POST['comment'])) {
-                $validation = true;
-                if (empty($_POST['author']) || empty($_POST['comment'])) {
-                    $validation = false;
-                }
-                if ($validation == true) {
-                    $commentInsert = new Comment([
-                        'id_post' => $_GET['post'],
-                        'author' => $_POST['author'],
-                        'comment' => $_POST['comment'],
-                    ]);        
-                    $commentManagerInsert = new CommentManager;
-                    $commentManagerInsert->addComment($commentInsert);
-
-                    $session->setFlash('Votre commentaire a bien été publié');
+        }
+        require ('view/viewFrontend/post.php');
+        }
     
-                    header("Location: index.php?action=post&post=$id_post");
-                    exit();
-                }
-            }
-            require ('view/viewFrontend/post.php');
-            }
-        
-    }
+}

@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Créer nouveau espace membre</title>
 </head>
-
 <body class="container text-center">
     <div class="form_login">
         <h3>Nouvel espace administrateur</h3>
@@ -21,9 +20,7 @@
             </form>
         </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="public/js/main.js"></script>
-    
+    <script type="text/javascript" src="public/js/main.js"></script>    
 </body>
 </html>

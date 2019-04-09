@@ -1,7 +1,4 @@
 <?php
-
-
-
 class Post {
     private $id;
     private $title;

@@ -1,8 +1,5 @@
 <?php
-
-
-
-    class Comment {
+class Comment {
         private $id;
         private $idPost;
         private $author;
