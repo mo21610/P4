@@ -1,17 +1,7 @@
 <?php
-class PostManager {
-    private $db;
-    public function __construct() {
-        try // Connexion à la BDD
-        {
-            $this->db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-            // $this->db = new PDO('mysql:host=db5000040901.hosting-data.io;dbname=dbs35913', 'dbu88387', '!Z4vpfh21000');
-        }
-        catch(Exception $e)
-        {
-                die('Erreur : '.$e->getMessage());
-        }
-    }
+require 'Manager.php';
+
+class PostManager extends Manager {
     public function getPost($id) {
         $req = $this->db->prepare("SELECT id, title, post, DATE_FORMAT(date_post, '%d/%m/%Y à %Hh%i') AS date_post FROM admin WHERE id = :id ");
         $req->execute(array( 

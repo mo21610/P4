@@ -1,16 +1,5 @@
 <?php
-class UserManager {
-    private $db;
-    public function __construct() {
-        try // Connexion à la BDD
-        {
-            $this->db =  new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        }
-        catch(Exception $e)
-        {
-                die('Erreur : '.$e->getMessage());
-        }
-    }
+class UserManager extends Manager {
     public function getUser($username) {
         $req = $this->db->prepare("SELECT * FROM users WHERE username = :username");
         $req->execute(array(

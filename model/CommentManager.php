@@ -1,16 +1,6 @@
 <?php
-class CommentManager {
-    private $db;
-    public function __construct() {
-        try // Connexion à la BDD
-        {
-            $this->db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        }
-        catch(Exception $e)
-        {
-                die('Erreur : '.$e->getMessage());
-        }
-    }
+
+class CommentManager extends Manager { 
     public function addComment(Comment $comment){
         $reqInsertComment = $this->db->prepare('INSERT INTO comments (id_post, author, comment, date_comment, report) VALUES(:id_post, :author, :comment, NOW(), 0)'); // Requête sans la partie variable
         $reqInsertComment->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD

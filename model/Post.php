@@ -1,12 +1,13 @@
 <?php
-class Post {
+
+class Post{
     private $id;
     private $title;
     private $post;
     private $datePost;
 
-    public function __construct(Array $dataPost) {
-        $this->hydrate($dataPost);
+    public function __construct(Array $dataUser) {
+        $this->hydrate($dataUser);
     }
     
     // Hydratation
