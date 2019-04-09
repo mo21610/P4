@@ -1,7 +1,7 @@
 <?php
 
 class CommentManager extends Manager { 
-    public function addComment(Comment $comment){
+    public function addComment(Comments $comment){
         $reqInsertComment = $this->db->prepare('INSERT INTO comments (id_post, author, comment, date_comment, report) VALUES(:id_post, :author, :comment, NOW(), 0)'); // Requête sans la partie variable
         $reqInsertComment->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
             'id_post' => $comment->idPost(),
@@ -16,7 +16,7 @@ class CommentManager extends Manager {
         'id_post' => $id,
         ));
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
-            $comments[] = new Comment($data);
+            $comments[] = new Comments($data);
         }
         return $comments;
     }
@@ -27,7 +27,7 @@ class CommentManager extends Manager {
             'report' => 1,
             ));
         while ($data = $req->fetch(PDO::FETCH_ASSOC)) {
-            $commentsReport[] = new Comment($data);
+            $commentsReport[] = new Comments($data);
         }
         return $commentsReport;
     }
@@ -38,14 +38,14 @@ class CommentManager extends Manager {
         ));
     }
     
-    public function updateComment(Comment $comment) {
+    public function updateComment(Comments $comment) {
         $req = $this->db->prepare('UPDATE comments SET report = 1 WHERE id = :id ');
         $req->execute(array( 
             'id' => $comment->id(),
         ));
     }
     
-    public function updateCommentReport(Comment $comment) {
+    public function updateCommentReport(Comments $comment) {
         $req = $this->db->prepare('UPDATE comments SET report = 0 WHERE id = :id ');
         $req->execute(array( 
             'id' => $comment->id(),

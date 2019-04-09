@@ -1,12 +1,8 @@
 <?php
-class User {
+class User extends HydrateManager {
     private $id;
     private $username;
     private $password;
-
-    public function __construct(Array $dataUser) {
-        $this->hydrate($dataUser);
-    }
     
     // Hydratation
     public function hydrate(Array $dataUser) {

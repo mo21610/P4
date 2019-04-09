@@ -9,7 +9,7 @@ class PostManager extends Manager {
         ));
         $dataPost = $req->fetch(PDO::FETCH_ASSOC);
         if($dataPost) {
-            $postDataOne = new Post($dataPost);
+            $postDataOne = new Posts($dataPost);
             return $postDataOne;
         }
         else {
@@ -21,7 +21,7 @@ class PostManager extends Manager {
         $req = $this->db->prepare('SELECT id, title, post, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin\') AS date_post FROM admin ORDER BY id DESC');
         $req->execute(array());
         while ($dataPost = $req->fetch(PDO::FETCH_ASSOC)) {
-            $allPosts[] = new Post($dataPost);
+            $allPosts[] = new Posts($dataPost);
         }
         return $allPosts;
     }
@@ -31,14 +31,14 @@ class PostManager extends Manager {
             'id' => $id,
         ));
     }
-    public function addPost(Post $post){
+    public function addPost(Posts $post){
         $req = $this->db->prepare('INSERT INTO admin (title, post, date_post) VALUES(:title, :post, NOW())'); // Requête sans la partie variable
         $req->execute(array(  // Recuperation des variables de $_POST (issue du form) & insertion dans BDD
             'title' => $post->title(),
             'post' => $post->post(),
         ));
     }
-    public function updatePost(Post $post) {
+    public function updatePost(Posts $post) {
         $reqEdit = $this->db->prepare('UPDATE admin SET title = :title_edit, post = :post_edit WHERE id = :id');
         $reqEdit->execute(array(
     	'title_edit' => $post->title(),

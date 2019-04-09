@@ -1,14 +1,11 @@
 <?php
+require 'HydrateManager.php';
 
-class Post{
+class Posts extends HydrateManager{
     private $id;
     private $title;
     private $post;
     private $datePost;
-
-    public function __construct(Array $dataUser) {
-        $this->hydrate($dataUser);
-    }
     
     // Hydratation
     public function hydrate(Array $dataPost) {

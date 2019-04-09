@@ -1,15 +1,11 @@
 <?php
-class Comment {
+class Comments extends HydrateManager {
         private $id;
         private $idPost;
         private $author;
         private $comment;
         private $dateComment;
         private $report;
-
-        public function __construct(Array $data) {
-        $this->hydrate($data);
-    }
     
     // Hydratation
     public function hydrate(Array $data) {
