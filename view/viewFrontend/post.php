@@ -21,8 +21,8 @@
 
     <h2>Ajouter un commentaire</h2>
     <form class="col-md-5 col-xs-12" action="index.php?action=post&post=<?= $id_post ?>" method="post">
-        Pseudo: <br><input class="form-control" type="text" name="author" class="form_comment"><br>
-        Commentaire: <br><textarea class="form-control" name="comment" class="form_comment"></textarea><br>
+        Pseudo: <br><input class="form-control" type="text" name="author"><br>
+        Commentaire: <br><textarea class="form-control" name="comment"></textarea><br>
         <button class="btn btn-secondary" type="submit">Ajouter un commentaire</button>
     </form>
 </div>
