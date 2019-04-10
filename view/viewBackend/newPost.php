@@ -3,7 +3,7 @@
     <form class="offset-1 col-md-10" action="index.php?action=newPost" method="post">
         <label for="title">Titre :</label>
         <input type="text" id="title" class="form-control" name="title">
-        <label for="text">Texte :</label>
+        <label for="mytextarea">Texte :</label>
         <textarea id="mytextarea" name="post" cols="100" rows="8"></textarea>
         <button type="submit" class="btn btn-dark">Publier</button>
     </form>
